@@ -1,0 +1,17 @@
+# Ignore everything in the root except the core theme files in the "wp-content" directory.
+/*
+!README.md
+!.gitignore
+!wp-content/
+
+wp-content/*
+node_modules/
+
+!wp-content/uploads/.htaccess
+!wp-content/themes/
+
+*.sass-cache
+*.DS_Store
+*[Tt]humbs.db
+*.Trashes
+style.css

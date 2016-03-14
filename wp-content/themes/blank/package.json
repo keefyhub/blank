@@ -1,0 +1,28 @@
+{
+  "name": "blank-wordpress",
+  "version": "1.0.0",
+  "description": "A blank wordpress install using GULP",
+  "main": "index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/keefyhub/blank.git"
+  },
+  "author": "Keith Light",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/keefyhub/blank/issues"
+  },
+  "homepage": "https://github.com/keefyhub/blank#readme",
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-cache": "^0.3.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-imagemin": "^2.3.0",
+    "gulp-sass": "^2.0.4",
+    "gulp-uglify": "^1.4.2"
+  }
+}
