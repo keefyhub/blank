@@ -7,6 +7,7 @@ var concat = require('gulp-concat');
 var imagemin = require('gulp-imagemin');
 var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
+var psi = require('psi');
 
 var assets = "./build/"
 
@@ -37,7 +38,7 @@ gulp.task('sass', function() {
             browsers: ["last 3 version", "> 1%", "ie 8"],
             cascade: false
         }))
-    .pipe(gulp.dest(assets +'css'));
+    .pipe(gulp.dest('./'));
 });
 
 // Images (needs to be run separately but will watch for changes)
@@ -55,6 +56,26 @@ gulp.task('watch', function() {
   gulp.watch('./sass/**/*', ['sass']);
    // Watch image files
   gulp.watch('./images/**', ['images']);
+});
+
+gulp.task('mobile', function () {
+  return psi('http://www.html5rocks.com', {
+      nokey: 'true',
+      strategy: 'mobile',
+  }).then(function(data) {
+      console.log('Speed score: ' + data.ruleGroups.SPEED.score);
+      console.log('Usability score: ' + data.ruleGroups.USABILITY.score);
+      console.log(data.pageStats);
+  });
+});
+
+gulp.task('desktop', function () {
+  return psi('http://www.html5rocks.com', {
+      nokey: 'true',
+      strategy: 'desktop',
+  }).then(function(data) {
+    console.log(data);
+  });
 });
 
 // Default Task
