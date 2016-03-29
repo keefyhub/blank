@@ -1,1 +1,1 @@
-jQuery(document).ready(function(d){d("body").append("jQuery Loaded")});
+jQuery(document).ready(function(d){d("body").append("jQuery Loaded")}),jQuery(document).ready(function(d){d("body").append("2nd loaded")});

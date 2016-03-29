@@ -5,8 +5,10 @@ var autoprefixer = require('gulp-autoprefixer');
 var cache = require('gulp-cache');
 var concat = require('gulp-concat');
 var imagemin = require('gulp-imagemin');
+var livereload = require('gulp-livereload');
 var sass = require('gulp-sass');
 var uglify = require('gulp-uglify');
+var psi = require('psi');
 
 var assets = "./build/"
 
@@ -24,9 +26,10 @@ gulp.task('clear', function (done) {
 // Concatenate & Minify JS
 gulp.task('scripts', function() {
     gulp.src('./js/*.js')
-      //.pipe(concat('scripts.js')) add this back in if you want concatinated js files
+        .pipe(concat('main.js'))
         .pipe(uglify())
-        .pipe(gulp.dest(assets +'js'));
+        .pipe(gulp.dest(assets +'js'))
+        .pipe(livereload());
 });
 
 // Sass & Autoprefix
@@ -37,24 +40,48 @@ gulp.task('sass', function() {
             browsers: ["last 3 version", "> 1%", "ie 8"],
             cascade: false
         }))
-    .pipe(gulp.dest(assets +'css'));
+    .pipe(gulp.dest('./'))
+    .pipe(livereload());
 });
 
 // Images (needs to be run separately but will watch for changes)
  gulp.task('images', function() {
   gulp.src('./images/**/*')
    .pipe(imagemin({ optimizationLevel: 5, progressive: true, interlaced: true }))
-   .pipe(gulp.dest(assets +'images'));
+   .pipe(gulp.dest(assets +'images'))
+   .pipe(livereload());
 });
 
 // Watch
 gulp.task('watch', function() {
+  // Live reload
+  livereload.listen();
    // Watch .js files
   gulp.watch('./js/*.js', ['scripts']);
    // Watch .scss files
   gulp.watch('./sass/**/*', ['sass']);
    // Watch image files
   gulp.watch('./images/**', ['images']);
+});
+
+gulp.task('mobile', function () {
+  return psi('http://www.html5rocks.com', {
+      nokey: 'true',
+      strategy: 'mobile',
+  }).then(function(data) {
+      console.log('Speed score: ' + data.ruleGroups.SPEED.score);
+      console.log('Usability score: ' + data.ruleGroups.USABILITY.score);
+      console.log(data.pageStats);
+  });
+});
+
+gulp.task('desktop', function () {
+  return psi('http://www.html5rocks.com', {
+      nokey: 'true',
+      strategy: 'desktop',
+  }).then(function(data) {
+    console.log(data);
+  });
 });
 
 // Default Task
